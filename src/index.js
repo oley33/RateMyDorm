@@ -1,29 +1,15 @@
 import React from 'react';
-import {createRoot} from 'react-dom/client';
-import './index.css';
-import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from './pages/Home';
-import Login from './pages/Login';
+import ReactDOM from 'react-dom/client';
+
+import App from './App';
 
 
 
-const rootElement = document.getElementById('root');
-const root = createRoot(rootElement);
-
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Router>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-
-    </Routes>
-  </Router>,
-
-  document.getElementById("root")
-
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
-
-serviceWorker.unregister();
 
 
