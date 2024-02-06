@@ -1,16 +1,30 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Navbar from "./Components/Navbar";
+import { Grid } from "@mui/material";
+import Sidebar from "./Components/Sidebar_TUT";
+import Form from "./Components/Form";
+import Rightbar from "./Components/Rightbar_TUT";
 
-const Post = () => {
+const PostPage = () => {
   return (
     <>
-      <h1>Post your reviews here</h1>
-      <h2>What do you think of your experience at your dorm?</h2>
-      <Link to="/">
-        <button>Home</button>
-      </Link>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Navbar />
+        </Grid>
+        <Grid item xs={4}>
+          <Sidebar />
+        </Grid>
+        <Grid item xs={4}>
+            <Form/>
+        </Grid>
+        <Grid item xs={4}>
+          <Rightbar />
+        </Grid>
+      </Grid>
     </>
   );
 };
 
-export default Post;
+export default PostPage;

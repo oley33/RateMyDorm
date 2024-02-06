@@ -2,7 +2,7 @@ import React from 'react'
 import { CheckBox, ExpandMore, Favorite, FavoriteBorder, MoreVert, Share } from '@mui/icons-material'
 import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Collapse, IconButton, Typography } from '@mui/material'
 
-const Post = () => {
+const Poster = () => {
   return (
     <div>
         <Card sx={{margin:5}}>
@@ -48,4 +48,4 @@ const Post = () => {
   )
 }
 
-export default Post
+export default Poster
