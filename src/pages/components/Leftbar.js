@@ -2,7 +2,7 @@ import React from 'react'
 import { Avatar, Box, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from '@mui/material'
 import { Chat, Group, HolidayVillage, Home, Layers, ModeNight, Money, Person, Settings } from '@mui/icons-material'
 
-const Leftbar = () => {
+const Leftbar = ({mode,setMode}) => {
     return (
         <Grid container spacing={5}>
             <Grid item xs={12} sm={3} md={2} style={{ position: 'fixed' }}>
@@ -174,7 +174,7 @@ const Leftbar = () => {
                         <ListItemIcon>
                             <ModeNight/>
                         </ListItemIcon>
-                        <Switch></Switch>
+                        <Switch onChange={e=>setMode(mode === "light" ? "dark" : "light")}/>
                     </ListItemButton>
                 </ListItem>
             </List>

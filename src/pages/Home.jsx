@@ -1,5 +1,5 @@
-import React from 'react';
-import { Grid } from '@mui/material';
+import React, { useState } from 'react';
+import { Grid, ThemeProvider, createTheme } from '@mui/material';
 import Navbar from './components/Navbar';
 import Leftbar from './components/Leftbar';
 import Feed from './components/Feed';
@@ -7,8 +7,19 @@ import Rightbar from './components/Rightbar';
 import Add from './components/Add';
 
 function Home() {
+
+  const [mode, setMode] = useState("light");
+
+  const darkTheme = createTheme ({
+    palette:{
+      mode: mode
+    },
+  });
+  
+
   return (
-    <Grid container>
+    <ThemeProvider theme={darkTheme}>
+    <Grid container bgcolor={"background.default"} color={"text.primary"}>
       {/* Navbar */}
       <Grid item xs={12}>
         <Navbar />
@@ -16,7 +27,7 @@ function Home() {
 
       {/* Leftbar */}
       <Grid item xs={12} sm={3} md={2}>
-        <Leftbar />
+        <Leftbar setMode={setMode} mode={mode}/>
       </Grid>
 
       {/* Feed */}
@@ -34,7 +45,8 @@ function Home() {
         <Add />
       </Grid>
     </Grid>
+    </ThemeProvider>
   );
-}
+  }
 
 export default Home;
