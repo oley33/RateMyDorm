@@ -4,18 +4,9 @@ import { Chat, Group, HolidayVillage, Home, Layers, ModeNight, Money, Person, Se
 
 const Leftbar = ({mode,setMode}) => {
     return (
-        <Grid container spacing={5}>
+        <Grid container spacing={.5} mt={6}>
             <Grid item xs={12} sm={3} md={2} style={{ position: 'fixed' }}>
             <List>
-                <ListItem disablePadding>
-                    <ListItemButton component="a" href="#home">
-                        <ListItemIcon>
-                            <Home/>
-                        </ListItemIcon>
-                        <ListItemText primary="Homepage" />
-                    </ListItemButton>
-                </ListItem>
-
                 <ListItem disablePadding>
                     <ListItemButton component="a" href="#pages">
                         <ListItemIcon>

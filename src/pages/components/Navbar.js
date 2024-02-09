@@ -44,7 +44,7 @@ const Navbar = () => {
         <AppBar position="fixed">
             <StyledToolbar>
                 <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
-                    Hayley Herlich
+                    Rate My Dorm
                 </Typography>
                 <PetsIcon sx={{ display: { xs: "block", sm: "none" } }} />
                 <Search><InputBase placeholder="search..."></InputBase></Search>

@@ -36,7 +36,7 @@ function Home() {
       </Grid>
 
       {/* Rightbar */}
-      <Grid item xs={12} sm={3} md={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
+      <Grid item xs={12} sm={3} md={2}  sx={{ display: { xs: 'none', sm: 'block' } }}>
         <Rightbar />
       </Grid>
 

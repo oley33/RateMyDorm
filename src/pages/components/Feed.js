@@ -5,7 +5,7 @@ import Post from './Post';
 
 const Feed = () => {
     return (
-        <Grid container spacing={2} flex={4} p={2}>
+        <Grid container spacing={1} mt={3}>
             <Grid item xs={12} md={9}>
                 <Post />
             </Grid>
