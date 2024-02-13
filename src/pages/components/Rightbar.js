@@ -16,11 +16,22 @@ import {
 } from '@mui/material';
 
 const Rightbar = () => {
-  const [showOnlyPhotos, setShowOnlyPhotos] = useState(false);
+  const [checkboxStates, setCheckboxStates] = useState({
+    singleBed: false,
+    doubleBed: false,
+    tripleBed: false,
+    suiteStyle: false,
+    apartmentStyle: false,
+    onMainCampus: false,
+    wheelchairAccessible: false,
+  });
   const [ratingFilter, setRatingFilter] = useState('all');
 
-  const handleShowOnlyPhotosChange = () => {
-    setShowOnlyPhotos(!showOnlyPhotos);
+  const handleCheckboxChange = (checkboxName) => {
+    setCheckboxStates((prevStates) => ({
+      ...prevStates,
+      [checkboxName]: !prevStates[checkboxName],
+    }));
   };
 
   const handleRatingFilterChange = (event) => {
@@ -37,104 +48,28 @@ const Rightbar = () => {
   return (
     <Grid container spacing={2} alignItems="flex-start" style={{ position: 'fixed'}}>
       {/* Photos Filter */}
-      <Grid item xs={12} mt={9} direction={'vertical'}> {/* Adjusted marginTop */}
+      <Grid item xs={12} mt={9} direction={'vertical'}>
         <Typography variant="h6" fontWeight={100}>
           Filters
         </Typography>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showOnlyPhotos}
-              onChange={handleShowOnlyPhotosChange}
-              color="primary"
+        {Object.entries(checkboxStates).map(([key, value]) => (
+          <Grid item xs={12} mt={-2} key={key} direction={'vertical'}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={value}
+                  onChange={() => handleCheckboxChange(key)}
+                  color="primary"
+                />
+              }
+              label={key.replace(/([A-Z])/g, ' $1').trim()}  // Convert camelCase to title case
             />
-          }
-          label="Single Bed"
-        />
-        
+          </Grid>
+        ))}
       </Grid>
-
-      <Grid item xs={12} mt={-2} direction={'vertical'}> {/* Adjusted marginTop */}
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showOnlyPhotos}
-              onChange={handleShowOnlyPhotosChange}
-              color="primary"
-            />
-          }
-          label="Double Bed"
-        />
-      </Grid>
-
-      <Grid item xs={12} mt={-2} direction={'vertical'}> {/* Adjusted marginTop */}
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showOnlyPhotos}
-              onChange={handleShowOnlyPhotosChange}
-              color="primary"
-            />
-          }
-          label="Triple Bed"
-        />
-      </Grid>
-
-      <Grid item xs={12} mt={-2} direction={'vertical'}> {/* Adjusted marginTop */}
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showOnlyPhotos}
-              onChange={handleShowOnlyPhotosChange}
-              color="primary"
-            />
-          }
-          label="Suite Style"
-        />
-      </Grid>
-
-      <Grid item xs={12} mt={-2} direction={'vertical'}> {/* Adjusted marginTop */}
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showOnlyPhotos}
-              onChange={handleShowOnlyPhotosChange}
-              color="primary"
-            />
-          }
-          label="Apartment Style"
-        />
-      </Grid>
-
-      <Grid item xs={12} mt={-2} direction={'vertical'}> {/* Adjusted marginTop */}
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showOnlyPhotos}
-              onChange={handleShowOnlyPhotosChange}
-              color="primary"
-            />
-          }
-          label="On Main Campus"
-        />
-      </Grid>
-
-      <Grid item xs={12} mt={-2} direction={'vertical'}> {/* Adjusted marginTop */}
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showOnlyPhotos}
-              onChange={handleShowOnlyPhotosChange}
-              color="primary"
-            />
-          }
-          label="Wheelchair Accessible"
-        />
-      </Grid>
-
 
       {/* Rating Filter */}
-      <Grid item xs={12} mt={2}> {/* Adjusted marginTop */}
+      <Grid item xs={12} mt={2}>
         <InputLabel id="rating-filter-label">Rating</InputLabel>
         <Select
           labelId="rating-filter-label"
@@ -149,7 +84,7 @@ const Rightbar = () => {
       </Grid>
 
       {/* Comments Section */}
-      <Grid item xs={12} mt={4}> {/* Adjusted marginTop */}
+      <Grid item xs={12} mt={4}>
         <Divider />
         <Typography variant="h6" fontWeight={100} mt={2}>
           Comments
