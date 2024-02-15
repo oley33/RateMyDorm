@@ -1,10 +1,12 @@
 import { Box, Fab, IconButton, Modal, Tooltip } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useReducer, useState } from 'react'
 import { Add as AddIcon } from "@mui/icons-material"
 
 
 const Add = () => {
     const [open, setOpen] = useState(false)
+
+    const [state, dispatch] = useReducer(reducerExample, initialState)
     return (
         <>
             <Tooltip onClick={e=>setOpen(true)}
