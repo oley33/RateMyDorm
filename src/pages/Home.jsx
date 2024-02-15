@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import {Button} from "@mui/material"
 
 const Home = () => {
+
+  const[state, setState] = useState(false);
+
+  useEffect(() => {
+    console.log(state)
+  },[state])
+
   return (
     <>
-      <h1>
-        Hello World!
-      </h1>
+      <Button onClick={() => setState(!state)}>
+        Click me
+      </Button>
+      {state ? <h1>Worked</h1> : null}
     </>
   );
 }
