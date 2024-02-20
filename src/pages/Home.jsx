@@ -3,12 +3,29 @@ import { Grid } from "@mui/material";
 import Navbar from "./Components/Navbar";
 import Leftbar from "./Components/Leftbar";
 import Feed from "./Components/Feed";
-import Rightbar from "./Components/Rightbar"
+import Rightbar from "./Components/Rightbar";
 import Add from "./Components/Add";
+import { useQuery } from "react-query";
+import axios from "axios";
+
 
 
 function Home() {
-  const [mode, setMode] = useState("light");
+
+
+  const { isLoading, error, data, isFetching } = useQuery({
+    queryKey: ["dormList"],
+    queryFn: () =>
+      axios.get("http://localhost:8080/dorm/all-dorms").then((res) => res.data),
+  });
+
+  if (isLoading) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
+  console.log(data);
+
+  //const [mode, setMode] = useState("light");
 
   /*const darkTheme = createTheme({
     palette: {
@@ -17,38 +34,38 @@ function Home() {
   });*/
 
   return (
-    <Grid container>
-      {/* Navbar */}
-      <Grid item xs={12}>
-        <Navbar />
-      </Grid>
+      <Grid container>
+        {/* Navbar */}
+        <Grid item xs={12}>
+          <Navbar />
+        </Grid>
 
-      {/* Leftbar */}
-      <Grid item xs={12} sm={3} md={2}>
-        <Leftbar />
-      </Grid>
+        {/* Leftbar */}
+        <Grid item xs={12} sm={3} md={2}>
+          <Leftbar />
+        </Grid>
 
-      {/* Feed */}
-      <Grid item xs={12} sm={6} md={8} sx={{ overflowY: "auto" }}>
-        <Feed />
-      </Grid>
+        {/* Feed */}
+        <Grid item xs={12} sm={6} md={8} sx={{ overflowY: "auto" }}>
+          <Feed />
+        </Grid>
 
-      {/* Rightbar */}
-      <Grid
-        item
-        xs={12}
-        sm={3}
-        md={2}
-        sx={{ display: { xs: "none", sm: "block" } }}
-      >
-        <Rightbar />
-      </Grid>
+        {/* Rightbar */}
+        <Grid
+          item
+          xs={12}
+          sm={3}
+          md={2}
+          sx={{ display: { xs: "none", sm: "block" } }}
+        >
+          <Rightbar />
+        </Grid>
 
-      {/* Add */}
-      <Grid item xs={12}>
-        <Add />
+        {/* Add */}
+        <Grid item xs={12}>
+          <Add />
+        </Grid>
       </Grid>
-    </Grid>
   );
 }
 
