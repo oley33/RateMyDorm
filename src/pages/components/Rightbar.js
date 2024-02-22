@@ -17,13 +17,13 @@ import {
 
 const Rightbar = () => {
   const [checkboxStates, setCheckboxStates] = useState({
-    singleBed: false,
-    doubleBed: false,
-    tripleBed: false,
-    suiteStyle: false,
-    apartmentStyle: false,
-    onMainCampus: false,
-    wheelchairAccessible: false,
+    SingleBed: false,
+    DoubleBed: false,
+    TripleBed: false,
+    SuiteStyle: false,
+    ApartmentStyle: false,
+    OnMainCampus: false,
+    WheelchairAccessible: false,
   });
   const [ratingFilter, setRatingFilter] = useState('all');
 
