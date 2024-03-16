@@ -1,199 +1,44 @@
 import React, { useState } from 'react'
-import { Avatar, Box, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from '@mui/material'
+import { Avatar, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from '@mui/material'
 import { Chat, Group, HolidayVillage, Home, Layers, ModeNight, Money, Person, Settings } from '@mui/icons-material'
 
-/* 
-    this is the format that reactquery will return to you
-    it is a stringify-ed json - each { } is an object with key value pairs
-    "name" is the key and the dorm is the value
-*/
-
-const dormList =
-    [{ "name": "Bellingrath" },
-    { "name": "White" },
-    { "name": "Glassell" },
-    { "name": "East Village" },
+const dormList = [
+    { "name": "Bellingrath Hall" },
+    { "name": "Blount Hall" },
+    { "name": "East Village Apartments" },
+    { "name": "Ellett Hall" },
+    { "name": "Glassel Hall" },
+    { "name": "Parkway Hall" },
+    { "name": "Robb Hall" },
+    { "name": "Robinson Hall" },
+    { "name": "Spann Place Townhouses" },
+    { "name": "Stewart Hall" },
+    { "name": "Townsend Hall" },
+    { "name": "Trezevant Hall" },
+    { "name": "Voorhies Hall" },
+    { "name": "Voorhies-Townsend" },
     { "name": "West Village" },
-    { "name": "Ellet" },
-    { "name": "Robb" },
-    { "name": "Trezevant" },
-    { "name": "Robinson" },
-    { "name": "Parkway" },
-    { "name": "Spann" },
-    { "name": "Stewart" },
-    { "name": "Townsend" },]
+    { "name": "White Hall" },
+    { "name": "Williford Hall" },
+];
 
 const Leftbar = ({ mode, setMode }) => {
-
-    /* 
-        this state is what the fetch will load data into
-        for now it is just the mock data above
-    */
-    const [dorms, setDorms] = useState(dormList)
+    const [dorms, setDorms] = useState(dormList);
 
     return (
-
-        /* 
-            Render this sidebar from the list of dorms above:
-            Use array.map()
-        */
-
-        <Grid container spacing={.5} mt={6}>
-            <Grid item xs={12} sm={3} md={2} style={{ position: 'fixed' }}>
+        <Grid container>
+            <Grid item xs={12} sm={3} md={2} sx={{ position: 'fixed', overflowY: 'auto', height: '100vh' }}>
                 <List>
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#pages">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Bellingrath Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#pages">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Blount Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#groups">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="East Village Apartments" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#marketplace">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Ellett Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#friends">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Glassel Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#settings">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Parkway Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#profile">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Robb Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#profile">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Robinson Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#profile">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Spann Place Townhouses" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#profile">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Stewart Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#profile">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Townsend Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#profile">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Trezevant Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#profile">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Voorhies Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#profile">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Voorhies-Townsend" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#profile">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="West Village" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#profile">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="White Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#profile">
-                            <ListItemIcon>
-                                <HolidayVillage />
-                            </ListItemIcon>
-                            <ListItemText primary="Williford Hall" />
-                        </ListItemButton>
-                    </ListItem>
-
+                    {dorms.map((dorm, index) => (
+                        <ListItem key={index} disablePadding>
+                            <ListItemButton component="a" href={`#${dorm.name.toLowerCase().replace(/\s/g, '')}`}>
+                                <ListItemIcon>
+                                    <HolidayVillage />
+                                </ListItemIcon>
+                                <ListItemText primary={dorm.name} />
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
                     <ListItem disablePadding>
                         <ListItemButton component="a" href="#switch">
                             <ListItemIcon>
@@ -208,4 +53,4 @@ const Leftbar = ({ mode, setMode }) => {
     )
 }
 
-export default Leftbar
+export default Leftbar;
