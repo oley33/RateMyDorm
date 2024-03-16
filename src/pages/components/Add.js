@@ -11,11 +11,12 @@ const Add = () => {
     return (
         <>
             <Tooltip onClick={() => setOpen(true)}
-                title="Delete"
+                title="Post a dorm review!"
                 sx={{
                     position: "fixed",
                     bottom: 20,
-                    left: { xs: "calc(50%-25px)", md: 30 }
+                    right: 20, // Adjust to position it to the bottom right corner
+                    zIndex: 9999, // Ensure it's above other elements
                 }}
             >
                 <Fab color="primary" aria-label="add">
