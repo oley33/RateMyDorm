@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Avatar, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from '@mui/material'
-import { Chat, Group, HolidayVillage, Home, Layers, ModeNight, Money, Person, Settings } from '@mui/icons-material'
+import React, { useState } from 'react';
+import { Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { HolidayVillage } from '@mui/icons-material';
 
 const dormList = [
     { "name": "Bellingrath Hall" },
@@ -22,7 +22,7 @@ const dormList = [
     { "name": "Williford Hall" },
 ];
 
-const Leftbar = ({ mode, setMode }) => {
+const Leftbar = () => {
     const [dorms, setDorms] = useState(dormList);
 
     return (
@@ -39,18 +39,10 @@ const Leftbar = ({ mode, setMode }) => {
                             </ListItemButton>
                         </ListItem>
                     ))}
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="#switch">
-                            <ListItemIcon>
-                                <ModeNight />
-                            </ListItemIcon>
-                            <Switch onChange={e => setMode(mode === "light" ? "dark" : "light")} />
-                        </ListItemButton>
-                    </ListItem>
                 </List>
             </Grid>
         </Grid>
-    )
+    );
 }
 
 export default Leftbar;

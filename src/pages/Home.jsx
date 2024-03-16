@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, createTheme, ThemeProvider } from "@mui/material";
 import Navbar from "./Components/Navbar";
 import Leftbar from "./Components/Leftbar";
 import Feed from "./Components/Feed";
@@ -8,10 +8,8 @@ import Add from "./Components/Add";
 import { useQuery } from "react-query";
 import axios from "axios";
 
-
-
 function Home() {
-
+  const [mode, setMode] = useState("light");
 
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["dormList"],
@@ -25,15 +23,21 @@ function Home() {
 
   console.log(data);
 
-  //const [mode, setMode] = useState("light");
-
-  /*const darkTheme = createTheme({
+  // Define custom themes for light and dark modes
+  const lightTheme = createTheme({
     palette: {
-      mode: mode,
+      mode: 'light',
+      primary: {
+        main: '#1976d2',
+      },
+      secondary: {
+        main: '#dc004e',
+      },
     },
-  });*/
+  });
 
   return (
+    <ThemeProvider theme={lightTheme}>
       <Grid container>
         {/* Navbar */}
         <Grid item xs={12}>
@@ -66,6 +70,7 @@ function Home() {
           <Add />
         </Grid>
       </Grid>
+    </ThemeProvider>
   );
 }
 
