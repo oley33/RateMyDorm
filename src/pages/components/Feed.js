@@ -1,3 +1,78 @@
+import React from 'react';
+import { Grid, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography, Checkbox } from '@mui/material';
+import { ExpandMore, Star, StarBorder, MoreVert, Share } from '@mui/icons-material';
+import { useQuery } from 'react-query';
+import axios from 'axios';
+
+const Feed = () => {
+  const { data: posts, isLoading, isError } = useQuery('posts', async () => {
+    const response = await axios.get('https://api.example.com/posts');
+    return response.data;
+  });
+
+  if (isLoading) return 'Loading...';
+  if (isError) return 'Error fetching data';
+
+  return (
+    <Grid container spacing={1} mt={9}>
+      {posts.map((post, postIndex) => (
+        <Grid item xs={12} md={11} key={postIndex}>
+          <Card>
+            <CardHeader
+              action={
+                <IconButton aria-label="settings">
+                  <MoreVert />
+                </IconButton>
+              }
+              title={post.title}
+              subheader={`Post ${postIndex + 1} Subheader`}
+            />
+            <CardMedia
+              component="img"
+              height="600"
+              image={post.image}
+              alt={`Post ${postIndex + 1}`}
+            />
+            <CardContent>
+              <Typography variant="body2" color="text.secondary">
+                {post.content}
+              </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+              {[0, 1, 2, 3, 4].map((starIndex) => (
+                <Checkbox
+                  icon={<StarBorder />}
+                  checkedIcon={<Star />}
+                  key={starIndex}
+                  checked={post.selectedStars.includes(starIndex)}
+                  // You may need to adjust this onChange handler based on your backend logic
+                  onChange={() => handleStarToggle(postIndex, starIndex)}
+                />
+              ))}
+              <IconButton aria-label="share">
+                <Share />
+              </IconButton>
+              <IconButton
+                aria-label="show more"
+                edge="end"
+              >
+                <ExpandMore />
+              </IconButton>
+            </CardActions>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
+  );
+};
+
+export default Feed;
+
+
+
+
+
+/*
 import React, { useState } from 'react';
 import { Grid, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography, Checkbox } from '@mui/material';
 import { ExpandMore, Star, StarBorder, MoreVert, Share } from '@mui/icons-material';
