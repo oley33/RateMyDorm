@@ -35,7 +35,7 @@ const Form = () => {
 
   // [event.target.name] ...
   const handleTextInputChange = (event) => {
-    setValues({ ...ReviewObject, [ReviewObject.text]: event.target.value });
+    setValues({ ...ReviewObject, [event.target.name]: event.target.value });
     console.log(ReviewObject);
   };
 
@@ -145,7 +145,7 @@ const Form = () => {
           multiline
           id="review"
           label="Please enter your review here"
-          name="Review"
+          name="text"
           value={ReviewObject.text}
           onChange={handleTextInputChange}
         />
