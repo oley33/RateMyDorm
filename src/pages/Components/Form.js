@@ -17,17 +17,26 @@ const Form = () => {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
-  // Information from form
+  // Information from to
   const initialValues = {
     FirstNameValue: "",
     LastNameValue: "",
     Email: "",
     Review: "",
   };
-  const [values, setValues] = useState(initialValues);
 
+  const [ReviewObject, setValues] = useState({
+    dormId:-1,
+    dormId:0,
+    dormName:"",
+    text:"",
+    stars:0
+  });
+
+  // [event.target.name] ...
   const handleTextInputChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+    setValues({ ...ReviewObject, [ReviewObject.text]: event.target.value });
+    console.log(ReviewObject);
   };
 
   // useState for dorm dropdown
@@ -61,6 +70,8 @@ const Form = () => {
     }
   };
 
+ 
+
   // get Data from DB
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["dormList"],
@@ -79,42 +90,6 @@ const Form = () => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <h2 style={{ textAlign: "center" }}>Review</h2>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          required
-          fullWidth
-          id="firstName"
-          label="First Name"
-          name="FirstNameValue"
-          value={values.FirstNameValue}
-          onChange={handleTextInputChange}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          required
-          fullWidth
-          id="lastName"
-          label="Last Name"
-          name="LastNameValue"
-          value={values.LastNameValue}
-          onChange={handleTextInputChange}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          required
-          fullWidth
-          id="email"
-          label="Email"
-          name="Email"
-          value={values.Email}
-          onChange={handleTextInputChange}
-        />
-      </Grid>
       <Grid item xs={12}>
         <Autocomplete
           onChange={handleTextSelectionChange}
@@ -171,7 +146,7 @@ const Form = () => {
           id="review"
           label="Please enter your review here"
           name="Review"
-          value={values.Review}
+          value={ReviewObject.text}
           onChange={handleTextInputChange}
         />
       </Grid>
@@ -198,15 +173,7 @@ const Form = () => {
           />
         </FormGroup>
       </Grid>
-      <p>Check input value: {values.FirstNameValue}</p>
-      <p>Last name: {values.LastNameValue}</p>
-      <p>Email: {values.Email}</p>
-      <p>rating: {rating}</p>
-      <p>Data from dorm: {selectedDormName}</p>
-      <p>{values.Review}</p>
-      <p>this: {cleanChecked}</p>
-      <p>check kitchen: {quietChecked}</p>
-      <p>Room style: </p>
+
     </Grid>
   );
 };
