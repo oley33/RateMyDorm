@@ -1,21 +1,30 @@
-import React from 'react';
-import { Grid, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography, Checkbox } from '@mui/material';
-import { ExpandMore, Star, StarBorder, MoreVert, Share } from '@mui/icons-material';
+import React, { useState } from 'react';
+import { Grid, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material';
+import { Star, StarBorder, MoreVert, Share } from '@mui/icons-material';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
 const Feed = () => {
-  const { data: posts, isLoading, isError } = useQuery('posts', async () => {
-    const response = await axios.get('https://api.example.com/posts');
-    return response.data;
+  const [selectedStars, setSelectedStars] = useState([]);
+
+  const handleStarToggle = (postIndex, starIndex) => {
+    const updatedStars = [...selectedStars];
+    updatedStars[postIndex] = starIndex < updatedStars[postIndex] ? starIndex + 1 : 0; // Toggle the number of selected stars for the post
+    setSelectedStars(updatedStars);
+  };
+
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["reviewList"],
+    queryFn: () =>
+      axios.get("http://localhost:8080/review/all-reviews").then((res) => res.data),
   });
 
   if (isLoading) return 'Loading...';
   if (isError) return 'Error fetching data';
 
   return (
-    <Grid container spacing={1} mt={9}>
-      {posts.map((post, postIndex) => (
+    <Grid container spacing={1} mt={2}>
+      {data.map((post, postIndex) => (
         <Grid item xs={12} md={11} key={postIndex}>
           <Card>
             <CardHeader
@@ -24,39 +33,31 @@ const Feed = () => {
                   <MoreVert />
                 </IconButton>
               }
-              title={post.title}
-              subheader={`Post ${postIndex + 1} Subheader`}
+              title={`Dorm: ${post.dormName},  Published: ${post.date}`} /* Displaying title and date */
             />
             <CardMedia
               component="img"
               height="600"
-              image={post.image}
-              alt={`Post ${postIndex + 1}`}
+              image={`https://source.unsplash.com/random/${postIndex}`}
+              alt={post.dormName}
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">
-                {post.content}
+                {post.text}
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
-              {[0, 1, 2, 3, 4].map((starIndex) => (
-                <Checkbox
-                  icon={<StarBorder />}
-                  checkedIcon={<Star />}
+              {[...Array(5)].map((_, starIndex) => (
+                <IconButton
                   key={starIndex}
-                  checked={post.selectedStars.includes(starIndex)}
-                  // You may need to adjust this onChange handler based on your backend logic
-                  onChange={() => handleStarToggle(postIndex, starIndex)}
-                />
+                  aria-label={`Star ${starIndex + 1}`}
+                  onClick={() => handleStarToggle(postIndex, starIndex)}
+                >
+                  {starIndex < post.stars ? <Star /> : <StarBorder />}
+                </IconButton>
               ))}
               <IconButton aria-label="share">
                 <Share />
-              </IconButton>
-              <IconButton
-                aria-label="show more"
-                edge="end"
-              >
-                <ExpandMore />
               </IconButton>
             </CardActions>
           </Card>
@@ -72,11 +73,17 @@ export default Feed;
 
 
 
+
+
 /*
 import React, { useState } from 'react';
 import { Grid, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography, Checkbox } from '@mui/material';
 import { ExpandMore, Star, StarBorder, MoreVert, Share } from '@mui/icons-material';
+*/
 
+
+
+/*
 const Feed = () => {
   const [selectedStars, setSelectedStars] = useState(Array.from({ length: 5 }, () => []));
 
@@ -155,3 +162,4 @@ const Feed = () => {
 };
 
 export default Feed;
+*/ 
