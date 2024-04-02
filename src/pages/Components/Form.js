@@ -51,8 +51,8 @@ const Form = () => {
   // useState for dorm dropdown
   const handleTextSelectionChange = (event, newInputValue) => {
     if (newInputValue != null) {
-      setValues({ ...ReviewObject, dormName: newInputValue["bldgName"] });
-      setValues({ ...ReviewObject, dormId: newInputValue["dormID"] });
+      //setValues({ ...ReviewObject, dormName: newInputValue["bldgName"] });
+      setValues({ ...ReviewObject, dormId: newInputValue["dormID"], dormName: newInputValue["bldgName"] });
     } else {
       setValues({ ...ReviewObject, dormName: "" });
       setValues({ ...ReviewObject, dormId: -1 });
@@ -128,14 +128,14 @@ const Form = () => {
       <Grid item xs={12}>
         <p>Overall rating: {rating}</p>
         {[...Array(5)].map((star, index) => {
-          ReviewObject.stars = index + 1;
+          // ReviewObject.stars = index + 1;
           return (
             <label>
               <input
                 type="radio"
                 name="rating"
-                value={ReviewObject.stars}
-                onClick={() => setRating(ReviewObject.stars)}
+                value={ReviewObject.stars = rating}
+                onClick={() => setRating(index+1)}
               />
               <FaStar
                 className="star"
@@ -145,7 +145,7 @@ const Form = () => {
                     ? "#ffc107"
                     : "#e4e5e9"
                 }
-                onMouseEnter={() => setHover(ReviewObject.stars)}
+                onMouseEnter={() => setHover(index+1)}
                 onMouseLeave={() => setHover(null)}
               />
             </label>
