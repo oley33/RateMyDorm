@@ -7,13 +7,22 @@ import {
   TextField,
   Checkbox,
   Autocomplete,
+  Button,
 } from "@mui/material";
 import { FaStar } from "react-icons/fa";
 // import DormSearch from "./DormSearch";
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 
 const Form = () => {
+  const { mutate } = useMutation(() => {
+    return fetch("http://localhost:8080/review/add-review", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(ReviewObject),
+    });
+  });
+
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
@@ -26,11 +35,11 @@ const Form = () => {
   };
 
   const [ReviewObject, setValues] = useState({
-    dormId:-1,
-    dormId:0,
-    dormName:"",
-    text:"",
-    stars:0
+    dormId: -1,
+    dormId: 0,
+    dormName: "",
+    text: "",
+    stars: 0,
   });
 
   // [event.target.name] ...
@@ -42,10 +51,13 @@ const Form = () => {
   // useState for dorm dropdown
   const handleTextSelectionChange = (event, newInputValue) => {
     if (newInputValue != null) {
-      setselectedDormName(newInputValue["bldgName"]);
+      setValues({ ...ReviewObject, dormName: newInputValue["bldgName"] });
+      setValues({ ...ReviewObject, dormId: newInputValue["dormID"] });
     } else {
-      setselectedDormName("");
+      setValues({ ...ReviewObject, dormName: "" });
+      setValues({ ...ReviewObject, dormId: -1 });
     }
+    console.log(ReviewObject);
   };
   const [selectedDormName, setselectedDormName] = useState("");
 
@@ -69,8 +81,6 @@ const Form = () => {
       setQChecked("");
     }
   };
-
- 
 
   // get Data from DB
   const { isLoading, error, data, isFetching } = useQuery({
@@ -96,6 +106,7 @@ const Form = () => {
           disablePortal
           id="dormSearch"
           options={data}
+          name="dormName"
           getOptionLabel={(options) => options["bldgName"]}
           renderInput={(params) => <TextField {...params} label="Dorm" />}
         />
@@ -117,22 +128,24 @@ const Form = () => {
       <Grid item xs={12}>
         <p>Overall rating: {rating}</p>
         {[...Array(5)].map((star, index) => {
-          const currentRating = index + 1;
+          ReviewObject.stars = index + 1;
           return (
             <label>
               <input
                 type="radio"
                 name="rating"
-                value={currentRating}
-                onClick={() => setRating(currentRating)}
+                value={ReviewObject.stars}
+                onClick={() => setRating(ReviewObject.stars)}
               />
               <FaStar
                 className="star"
                 size={40}
                 color={
-                  currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9"
+                  ReviewObject.stars <= (hover || rating)
+                    ? "#ffc107"
+                    : "#e4e5e9"
                 }
-                onMouseEnter={() => setHover(currentRating)}
+                onMouseEnter={() => setHover(ReviewObject.stars)}
                 onMouseLeave={() => setHover(null)}
               />
             </label>
@@ -173,7 +186,9 @@ const Form = () => {
           />
         </FormGroup>
       </Grid>
-
+      <Grid item xs={12}>
+        <Button variant="contained" onClick={()=> {mutate()}}>Submit</Button>
+      </Grid>
     </Grid>
   );
 };
