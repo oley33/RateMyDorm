@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Grid, createTheme, ThemeProvider } from "@mui/material";
-import Navbar from "./Components/Navbar";
-import Leftbar from "./Components/Leftbar";
-import Feed from "./Components/Feed";
-import Rightbar from "./Components/Rightbar";
-import Add from "./Components/Add";
+import Navbar from "./components/Navbar";
+import Leftbar from "./components/Leftbar";
+import Feed from "./components/Feed";
+import Rightbar from "./components/Rightbar";
+import Add from "./components/Add";
 import { useQuery } from "react-query";
 import axios from "axios";
 
