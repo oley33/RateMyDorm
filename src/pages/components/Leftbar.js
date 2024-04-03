@@ -13,7 +13,8 @@ const Leftbar = () => {
 
   if (isLoading) return 'Loading...';
   if (isError) return 'Error fetching data';
-
+  console.log(data)
+  
   return (
     <Paper sx={{ position: 'sticky', top: 0, maxHeight: '100vh', overflowY: 'auto' }}>
       <List>
