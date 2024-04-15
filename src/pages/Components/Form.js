@@ -8,6 +8,8 @@ import {
   Checkbox,
   Autocomplete,
   Button,
+  FormControl,
+  FormLabel
 } from "@mui/material";
 import { FaStar } from "react-icons/fa";
 // import DormSearch from "./DormSearch";
@@ -26,21 +28,15 @@ const Form = () => {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
-  // Information from to
-  const initialValues = {
-    FirstNameValue: "",
-    LastNameValue: "",
-    Email: "",
-    Review: "",
-  };
-
   const [ReviewObject, setValues] = useState({
     dormId: -1,
-    dormId: 0,
     dormName: "",
     text: "",
     stars: 0,
+    style: "",
   });
+
+  ReviewObject.stars = rating;
 
   // [event.target.name] ...
   const handleTextInputChange = (event) => {
@@ -48,39 +44,39 @@ const Form = () => {
     console.log(ReviewObject);
   };
 
+  // Filter control
+  const styleOptions = [
+    "Single Bed",
+    "Double Bed",
+    "Triple Bed",
+    "Suite Style",
+    "Apartment Style"
+  ]
+
+  const handleStyleChange = (event, newStyleValue) => {
+    if (newStyleValue != null) {
+      setValues({...ReviewObject, style: newStyleValue});
+    }
+    else {
+      setValues({...ReviewObject, style: ""});
+    }
+  }
+
   // useState for dorm dropdown
   const handleTextSelectionChange = (event, newInputValue) => {
     if (newInputValue != null) {
       //setValues({ ...ReviewObject, dormName: newInputValue["bldgName"] });
-      setValues({ ...ReviewObject, dormId: newInputValue["dormID"], dormName: newInputValue["bldgName"] });
+      setValues({
+        ...ReviewObject,
+        dormId: newInputValue["dormID"],
+        dormName: newInputValue["bldgName"],
+      });
     } else {
-      setValues({ ...ReviewObject, dormName: "" });
-      setValues({ ...ReviewObject, dormId: -1 });
+      setValues({ ...ReviewObject, dormName: "", dormId: -1 });
     }
     console.log(ReviewObject);
   };
   const [selectedDormName, setselectedDormName] = useState("");
-
-  // onChange function for checkboxes
-  const handleCheckboxChange = (event) => {
-    if (cleanChecked == "") {
-      setCChecked("true");
-    } else {
-      setCChecked("");
-    }
-  };
-  // useStates for checkboxes
-  const [cleanChecked, setCChecked] = useState("");
-
-  const [quietChecked, setQChecked] = useState("");
-  // onChange and useState for kitchen Check
-  const handleQuietChange = (event) => {
-    if (quietChecked == "") {
-      setQChecked("true");
-    } else {
-      setQChecked("");
-    }
-  };
 
   // get Data from DB
   const { isLoading, error, data, isFetching } = useQuery({
@@ -112,40 +108,24 @@ const Form = () => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Autocomplete
-          options={dormStyleList}
-          renderInput={(params) => <TextField {...params} label="Room Style" />}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Autocomplete
-          options={dormLocationList}
-          renderInput={(params) => (
-            <TextField {...params} label="Room Location" />
-          )}
-        />
-      </Grid>
-      <Grid item xs={12}>
         <p>Overall rating: {rating}</p>
         {[...Array(5)].map((star, index) => {
-          // ReviewObject.stars = index + 1;
+          const currentRating = index + 1;
           return (
             <label>
               <input
                 type="radio"
                 name="rating"
-                value={ReviewObject.stars = rating}
-                onClick={() => setRating(index+1)}
+                value={currentRating}
+                onClick={() => setRating(currentRating)}
               />
               <FaStar
                 className="star"
                 size={40}
                 color={
-                  ReviewObject.stars <= (hover || rating)
-                    ? "#ffc107"
-                    : "#e4e5e9"
+                  currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9"
                 }
-                onMouseEnter={() => setHover(index+1)}
+                onMouseEnter={() => setHover(currentRating)}
                 onMouseLeave={() => setHover(null)}
               />
             </label>
@@ -164,30 +144,23 @@ const Form = () => {
         />
       </Grid>
       <Grid item xs={12}>
-        <p>Check which options apply:</p>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                cleanCheckedchecked={cleanChecked}
-                onChange={handleCheckboxChange}
-              />
-            }
-            label="Quiet"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                quietChecked={quietChecked}
-                onChange={handleQuietChange}
-              />
-            }
-            label="In unit kitchen"
-          />
-        </FormGroup>
+        <Autocomplete
+          disablePortal
+          onChange={handleStyleChange}
+          id="dormStye"
+          options={styleOptions}
+          renderInput={(params) => <TextField {...params} label="Dorm Style" />}
+        />
       </Grid>
       <Grid item xs={12}>
-        <Button variant="contained" onClick={()=> {mutate()}}>Submit</Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            mutate();
+          }}
+        >
+          Submit
+        </Button>
       </Grid>
     </Grid>
   );
