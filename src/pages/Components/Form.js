@@ -88,11 +88,26 @@ const Form = () => {
   if (error) return "An error has occurred: " + error.message;
   console.log(data);
 
-  // Room Style
-  const dormStyleList = ["Single", "Double", "Triple", "Suite Style"];
+  const imageHandler = (event) => {
 
-  // Room Location
-  const dormLocationList = ["East Campus", "West Campus", "Off-Campus"];
+    const file = event.target.files[0];
+    const formdata = new FormData()
+    formdata.append('image', file)
+
+    fetch("https://localhost:8080/photo/add-photo", {
+      method: 'POST',
+      body: formdata,
+      headers: {
+        'Accept': 'multipart/form-data',
+        credentials: 'include',
+      }
+    })
+    .then(res => res.json())
+
+    .catch(error => {
+      console.error(error)
+    })
+  }
 
   return (
     <Grid container spacing={2}>
@@ -151,6 +166,9 @@ const Form = () => {
           options={styleOptions}
           renderInput={(params) => <TextField {...params} label="Dorm Style" />}
         />
+      </Grid>
+      <Grid item xs={12}>
+        <input type="file" name="image" accept="image/*" multiple={false} onChange={imageHandler}/>
       </Grid>
       <Grid item xs={12}>
         <Button
