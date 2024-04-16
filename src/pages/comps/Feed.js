@@ -16,7 +16,7 @@ const Feed = () => {
   const { isLoading, isError, data } = useQuery({
     queryKey: ["reviewList"],
     queryFn: () =>
-      axios.get("http://localhost:8080/review/all-reviews").then((res) => res.data),
+      axios.get("https://desolate-spire-74197-365605b6831f.herokuapp.com/review/all-reviews").then((res) => res.data),
   });
 
   if (isLoading) return 'Loading...';
