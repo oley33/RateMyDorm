@@ -25,6 +25,26 @@ const Form = () => {
     });
   });
 
+  const imageHandler = (event) => {
+
+    const file = event.target.files[0];
+    const formdata = new FormData();
+    formdata.append('image', file);
+
+    const imageObject = {photo: formdata};
+
+    fetch("https://localhost:8080/photo/add-photo", {
+      method: 'POST',
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(imageObject),
+    })
+    // .then(res => res.json())
+
+    .catch(error => {
+      console.error(error)
+    })
+  }
+
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
@@ -88,26 +108,7 @@ const Form = () => {
   if (error) return "An error has occurred: " + error.message;
   console.log(data);
 
-  const imageHandler = (event) => {
 
-    const file = event.target.files[0];
-    const formdata = new FormData()
-    formdata.append('image', file)
-
-    fetch("https://localhost:8080/photo/add-photo", {
-      method: 'POST',
-      body: formdata,
-      headers: {
-        'Accept': 'multipart/form-data',
-        credentials: 'include',
-      }
-    })
-    .then(res => res.json())
-
-    .catch(error => {
-      console.error(error)
-    })
-  }
 
   return (
     <Grid container spacing={2}>
