@@ -9,7 +9,8 @@ import { useQuery } from "react-query";
 import axios from "axios";
 
 function Home() {
-  const [mode, setMode] = useState("light");
+  const [selectedStyle, setSelectedStyle] = useState(null);
+  const [selectedDorm, setSelectedDorm] = useState(null); // State to store selected dorm
 
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["dormList"],
@@ -36,6 +37,15 @@ function Home() {
     },
   });
 
+  const handleStyleFilterChange = (style) => {
+    setSelectedStyle(style);
+  };
+
+  // Function to handle dorm filter change
+  const handleDormFilterChange = (dormName) => {
+    setSelectedDorm(dormName); // Update selected dorm state
+  };
+
   return (
     <ThemeProvider theme={lightTheme}>
       <Grid container>
@@ -46,12 +56,14 @@ function Home() {
 
         {/* Leftbar */}
         <Grid item xs={12} sm={3} md={2}>
-          <Leftbar />
+          {/* Pass the handleDormFilterChange function to the Leftbar */}
+          <Leftbar onDormFilterChange={handleDormFilterChange} />
         </Grid>
 
         {/* Feed */}
         <Grid item xs={12} sm={6} md={8} sx={{ overflowY: "auto" }}>
-          <Feed />
+          {/* Pass selectedDorm as a prop to the Feed component */}
+          <Feed selectedStyle={selectedStyle} selectedDorm={selectedDorm} />
         </Grid>
 
         {/* Rightbar */}
@@ -62,7 +74,7 @@ function Home() {
           md={2}
           sx={{ display: { xs: "none", sm: "block" } }}
         >
-          <Rightbar />
+          <Rightbar onStyleFilterChange={handleStyleFilterChange} />
         </Grid>
 
         {/* Add */}

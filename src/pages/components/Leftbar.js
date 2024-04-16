@@ -4,7 +4,7 @@ import { HolidayVillage } from '@mui/icons-material';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
-const Leftbar = () => {
+const Leftbar = ({ onDormFilterChange }) => {
   const { isLoading, isError, data } = useQuery({
     queryKey: ["dormList"],
     queryFn: () =>
@@ -14,12 +14,17 @@ const Leftbar = () => {
   if (isLoading) return 'Loading...';
   if (isError) return 'Error fetching data';
 
+  const handleDormClick = (dormName) => {
+    // Pass the selected dorm name filter to the parent component
+    onDormFilterChange(dormName);
+  };
+
   return (
     <Paper sx={{ position: 'sticky', top: 0, maxHeight: '100vh', overflowY: 'auto' }}>
       <List>
         {data.map((dorm, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton component="a" href={`#${dorm.bldgName}`}>
+            <ListItemButton onClick={() => handleDormClick(dorm.bldgName)}>
               <ListItemIcon>
                 <HolidayVillage />
               </ListItemIcon>

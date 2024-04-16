@@ -3,9 +3,6 @@ import {
   Typography,
   Checkbox,
   FormControlLabel,
-  Select,
-  MenuItem,
-  InputLabel,
   Grid,
   Divider,
   Avatar,
@@ -15,7 +12,7 @@ import {
   ListItemText,
 } from '@mui/material';
 
-const Rightbar = () => {
+const Rightbar = ({ onStyleFilterChange }) => {
   const [checkboxStates, setCheckboxStates] = useState({
     SingleBed: false,
     DoubleBed: false,
@@ -24,62 +21,122 @@ const Rightbar = () => {
     ApartmentStyle: false,
     OnMainCampus: false,
   });
-  const [ratingFilter, setRatingFilter] = useState('all');
 
-  const handleCheckboxChange = (checkboxName) => {
-    setCheckboxStates((prevStates) => ({
+  const handleStyleFilterChange = (style) => {
+    // Toggle the checkbox state and pass the selected style filter to the parent component
+    setCheckboxStates(prevStates => ({
       ...prevStates,
-      [checkboxName]: !prevStates[checkboxName],
+      [style]: !prevStates[style],
     }));
-  };
-
-  const handleRatingFilterChange = (event) => {
-    setRatingFilter(event.target.value);
+    onStyleFilterChange(style);
   };
 
   // Sample comments data
   const comments = [
-    { id: 1, user: 'John Doe', avatarSrc: 'https://i.pravatar.cc/40', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
-    { id: 2, user: 'Jane Smith', avatarSrc: 'https://i.pravatar.cc/40', content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { id: 3, user: 'Bob Johnson', avatarSrc: 'https://i.pravatar.cc/40', content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.' },
+    { id: 1, user: 'Prof Kirlin', avatarSrc: 'https://i.pravatar.cc/40', content: 'LoSeRs.' },
+    { id: 2, user: 'Prof Kugele', avatarSrc: 'https://i.pravatar.cc/41', content: 'I love Williford.' },
+    { id: 3, user: 'Prof Sanders', avatarSrc: 'https://i.pravatar.cc/42', content: 'I will make a dorm in VR.' },
   ];
 
   return (
-    <Grid container spacing={2} alignItems="flex-start" style={{ position: 'fixed'}}>
-      {/* Photos Filter */}
-      <Grid item xs={12} mt={9} direction={'vertical'}>
+    <Grid container spacing={2} alignItems="flex-start" style={{ position: 'fixed' }}>
+      {/* Filters */}
+      <Grid item xs={12} mt={9}>
         <Typography variant="h6" fontWeight={100}>
           Filters
         </Typography>
-        {Object.entries(checkboxStates).map(([key, value]) => (
-          <Grid item xs={12} mt={-2} key={key} direction={'vertical'}>
+        <Grid container direction="column" spacing={1}>
+          <Grid item>
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={value}
-                  onChange={() => handleCheckboxChange(key)}
+                  checked={checkboxStates.SingleBed}
+                  onChange={() => {
+                    setCheckboxStates(prevStates => ({
+                      ...prevStates,
+                      SingleBed: !prevStates.SingleBed,
+                    }));
+                    handleStyleFilterChange('single');
+                  }}
                   color="primary"
                 />
               }
-              label={key.replace(/([A-Z])/g, ' $1').trim()}  // Convert camelCase to title case
+              label="Single Bed"
             />
           </Grid>
-        ))}
-      </Grid>
-
-      {/* Rating Filter */}
-      <Grid item xs={12} mt={2}>
-        <InputLabel id="rating-filter-label">Rating</InputLabel>
-        <Select
-          labelId="rating-filter-label"
-          value={ratingFilter}
-          onChange={handleRatingFilterChange}
-          fullWidth
-        >
-          <MenuItem value="all">All Ratings</MenuItem>
-          <MenuItem value="lowToHigh">Lowest to Highest</MenuItem>
-          <MenuItem value="highToLow">Highest to Lowest</MenuItem>
-        </Select>
+          <Grid item>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checkboxStates.DoubleBed}
+                  onChange={() => {
+                    setCheckboxStates(prevStates => ({
+                      ...prevStates,
+                      DoubleBed: !prevStates.DoubleBed,
+                    }));
+                    handleStyleFilterChange('double');
+                  }}
+                  color="primary"
+                />
+              }
+              label="Double Bed"
+            />
+          </Grid>
+          <Grid item>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checkboxStates.TripleBed}
+                  onChange={() => {
+                    setCheckboxStates(prevStates => ({
+                      ...prevStates,
+                      TripleBed: !prevStates.TripleBed,
+                    }));
+                    handleStyleFilterChange('triple');
+                  }}
+                  color="primary"
+                />
+              }
+              label="Triple Bed"
+            />
+          </Grid>
+          <Grid item>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checkboxStates.ApartmentStyle}
+                  onChange={() => {
+                    setCheckboxStates(prevStates => ({
+                      ...prevStates,
+                      ApartmentStyle: !prevStates.ApartmentStyle,
+                    }));
+                    handleStyleFilterChange('apartment');
+                  }}
+                  color="primary"
+                />
+              }
+              label="Apartment Style"
+            />
+          </Grid>
+          <Grid item>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checkboxStates.SuiteStyle}
+                  onChange={() => {
+                    setCheckboxStates(prevStates => ({
+                      ...prevStates,
+                      SuiteStyle: !prevStates.SuiteStyle,
+                    }));
+                    handleStyleFilterChange('suite');
+                  }}
+                  color="primary"
+                />
+              }
+              label="Suite Style"
+            />
+          </Grid>
+        </Grid>
       </Grid>
 
       {/* Comments Section */}
