@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material';
+import { Grid, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography, Button } from '@mui/material';
 import { Star, StarBorder, MoreVert, Share } from '@mui/icons-material';
 import { useQuery } from 'react-query';
 import axios from 'axios';
@@ -7,13 +7,6 @@ import axios from 'axios';
 const Feed = ({ selectedStyle, selectedDorm }) => {
   const [selectedStars, setSelectedStars] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-
-  const handleStarToggle = (postIndex, starIndex) => {
-    const updatedStars = [...selectedStars];
-    updatedStars[postIndex] = starIndex < updatedStars[postIndex] ? starIndex + 1 : 0; // Toggle the number of selected stars for the post
-    setSelectedStars(updatedStars);
-  };
-
   const { isLoading, isError, data } = useQuery({
     queryKey: ["reviewList"],
     queryFn: () =>
@@ -34,11 +27,27 @@ const Feed = ({ selectedStyle, selectedDorm }) => {
     }
   }, [data, selectedStyle, selectedDorm]);
 
+  const handleStarToggle = (postIndex, starIndex) => {
+    const updatedStars = [...selectedStars];
+    updatedStars[postIndex] = starIndex < updatedStars[postIndex] ? starIndex + 1 : 0; // Toggle the number of selected stars for the post
+    setSelectedStars(updatedStars);
+  };
+
+  const handleReset = () => {
+    // Clear selectedStyle and selectedDorm
+    setFilteredData(data);
+  };
+
   if (isLoading) return 'Loading...';
   if (isError) return 'Error fetching data';
 
   return (
     <Grid container spacing={1} mt={2}>
+      <Grid item xs={12} mb={2}>
+        <Button variant="contained" color="primary" onClick={handleReset}>
+          Reset Feed
+        </Button>
+      </Grid>
       {filteredData.map((post, postIndex) => (
         <Grid item xs={12} md={11} key={postIndex}>
           <Card>
