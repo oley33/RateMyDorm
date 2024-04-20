@@ -4,7 +4,7 @@ import { Star, StarBorder, MoreVert, Share } from '@mui/icons-material';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
-const Feed = ({ selectedStyle }) => {
+const Feed = ({ selectedStyle, selectedDorm }) => {
   const [selectedStars, setSelectedStars] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
 
@@ -21,21 +21,25 @@ const Feed = ({ selectedStyle }) => {
   });
 
   useEffect(() => {
-    // Filter data based on selected style
-    if (data && selectedStyle) {
-      const filteredData = data.filter(post => post.style === selectedStyle);
+    // Filter data based on selected style and dorm
+    if (data) {
+      let filteredData = [...data];
+      if (selectedStyle) {
+        filteredData = filteredData.filter(post => post.style === selectedStyle);
+      }
+      if (selectedDorm) {
+        filteredData = filteredData.filter(post => post.dormName === selectedDorm);
+      }
       setFilteredData(filteredData);
     }
-  }, [data, selectedStyle]);
+  }, [data, selectedStyle, selectedDorm]);
 
   if (isLoading) return 'Loading...';
   if (isError) return 'Error fetching data';
 
-  const feedData = filteredData.length ? filteredData : data;
-
   return (
     <Grid container spacing={1} mt={2}>
-      {feedData.map((post, postIndex) => (
+      {filteredData.map((post, postIndex) => (
         <Grid item xs={12} md={11} key={postIndex}>
           <Card>
             <CardHeader

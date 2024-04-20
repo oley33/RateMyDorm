@@ -11,7 +11,6 @@ import axios from "axios";
 function Home() {
   const [selectedStyle, setSelectedStyle] = useState(null);
   const [selectedDorm, setSelectedDorm] = useState(null); // State to store selected dorm
-
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["dormList"],
     queryFn: () =>
@@ -21,8 +20,6 @@ function Home() {
   if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
-
-  console.log(data);
 
   // Define custom themes for light and dark modes
   const lightTheme = createTheme({
@@ -37,12 +34,14 @@ function Home() {
     },
   });
 
+  // Function to handle style filter change
   const handleStyleFilterChange = (style) => {
     setSelectedStyle(style);
   };
 
   // Function to handle dorm filter change
   const handleDormFilterChange = (dormName) => {
+    console.log('Selected dorm:', dormName); // Log selected dorm
     setSelectedDorm(dormName); // Update selected dorm state
   };
 
@@ -57,13 +56,13 @@ function Home() {
         {/* Leftbar */}
         <Grid item xs={12} sm={3} md={2}>
           {/* Pass the handleDormFilterChange function to the Leftbar */}
-          <Leftbar onDormFilterChange={handleDormFilterChange} />
+          <Leftbar onDormFilterChange={handleDormFilterChange} dorms={data} />
         </Grid>
 
         {/* Feed */}
         <Grid item xs={12} sm={6} md={8} sx={{ overflowY: "auto" }}>
           {/* Pass selectedDorm as a prop to the Feed component */}
-          <Feed selectedStyle={selectedStyle} selectedDorm={selectedDorm} />
+          <Feed selectedDorm={selectedDorm} selectedStyle={selectedStyle} />
         </Grid>
 
         {/* Rightbar */}

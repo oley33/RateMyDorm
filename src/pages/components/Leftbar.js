@@ -1,40 +1,36 @@
 import React from 'react';
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper } from '@mui/material';
-import { HolidayVillage } from '@mui/icons-material';
-import { useQuery } from 'react-query';
-import axios from 'axios';
+import { Typography, List, ListItem, ListItemText, Button } from '@mui/material';
 
-const Leftbar = ({ onDormFilterChange }) => {
-  const { isLoading, isError, data } = useQuery({
-    queryKey: ["dormList"],
-    queryFn: () =>
-      axios.get("http://localhost:8080/dorm/all-dorms").then((res) => res.data),
-  });
-
-  if (isLoading) return 'Loading...';
-  if (isError) return 'Error fetching data';
-
+const Leftbar = ({ onDormFilterChange, dorms }) => {
   const handleDormClick = (dormName) => {
-    // Pass the selected dorm name filter to the parent component
+    console.log('Clicked dorm:', dormName);
     onDormFilterChange(dormName);
   };
 
+  console.log('Dorms:', dorms);
+
   return (
-    <Paper sx={{ position: 'sticky', top: 0, maxHeight: '100vh', overflowY: 'auto' }}>
+    <div>
+      <Typography variant="h6" fontWeight={100}>
+        Dorms
+      </Typography>
       <List>
-        {data.map((dorm, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton onClick={() => handleDormClick(dorm.bldgName)}>
-              <ListItemIcon>
-                <HolidayVillage />
-              </ListItemIcon>
-              <ListItemText primary={dorm.bldgName} />
-            </ListItemButton>
+        {dorms.map((dorm) => (
+          <ListItem
+            button
+            key={dorm.id}
+            onClick={() => handleDormClick(dorm.bldgName)}
+          >
+            <ListItemText primary={dorm.bldgName} />
           </ListItem>
         ))}
       </List>
-    </Paper>
+      {/* Add a button line for other functionalities */}
+      <Button variant="contained" color="primary" onClick={() => {/* Handle button click */}}>
+        Other Functionality
+      </Button>
+    </div>
   );
-}
+};
 
 export default Leftbar;
