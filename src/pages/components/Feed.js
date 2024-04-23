@@ -7,6 +7,8 @@ import axios from 'axios';
 const Feed = ({ selectedStyle, selectedDorm }) => {
   const [selectedStars, setSelectedStars] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [dormPhotos, setDormPhotos] = useState({});
+
   const { isLoading, isError, data } = useQuery({
     queryKey: ["reviewList"],
     queryFn: () =>
@@ -27,6 +29,45 @@ const Feed = ({ selectedStyle, selectedDorm }) => {
     }
   }, [data, selectedStyle, selectedDorm]);
 
+  const fetchPhotosForDorm = async (dormId) => {
+    try {
+      console.log(`Fetching photos for dormId: ${dormId}`);
+      const response = await axios.get(`http://localhost:8080/photo/get-photos/${dormId}`);
+      console.log('Response from photo endpoint:', response.data);
+      return response.data; // Return the entire response
+    } catch (error) {
+      console.error('Error fetching photos for dorm:', error);
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    // Fetch photos for each dorm
+    if (filteredData.length > 0) {
+      const fetchData = async () => {
+        const dormPhotosData = {};
+        for (const post of filteredData) {
+          console.log(`Fetching photos for dorm ${post.dormId}...`);
+          const photos = await fetchPhotosForDorm(post.dormId);
+          console.log(`Fetched photos for dorm ${post.dormId}:`, photos);
+  
+          if (photos && photos.length > 0 && photos[0].photo) {
+            // Convert base64 string to blob
+            const blob = await fetch(`data:image/png;base64,${photos[0].photo}`).then(res => res.blob());
+            // Create object URL from blob
+            const imgUrl = URL.createObjectURL(blob);
+            dormPhotosData[post.dormId] = imgUrl;
+          } else {
+            console.error('Invalid photo data for dorm:', post.dormId);
+          }
+        }
+        console.log('Updated dormPhotos:', dormPhotosData);
+        setDormPhotos(dormPhotosData);
+      };
+      fetchData();
+    }
+  }, [filteredData]);
+
   const handleStarToggle = (postIndex, starIndex) => {
     const updatedStars = [...selectedStars];
     updatedStars[postIndex] = starIndex < updatedStars[postIndex] ? starIndex + 1 : 0; // Toggle the number of selected stars for the post
@@ -38,8 +79,14 @@ const Feed = ({ selectedStyle, selectedDorm }) => {
     setFilteredData(data);
   };
 
-  if (isLoading) return 'Loading...';
-  if (isError) return 'Error fetching data';
+  if (isLoading) {
+    console.log('Loading data...');
+    return 'Loading...';
+  }
+  if (isError) {
+    console.error('Error fetching data:', isError);
+    return 'Error fetching data';
+  }
 
   return (
     <Grid container spacing={1} mt={2}>
@@ -62,7 +109,7 @@ const Feed = ({ selectedStyle, selectedDorm }) => {
             <CardMedia
               component="img"
               height="600"
-              image={`https://source.unsplash.com/random/${postIndex}`}
+              src={dormPhotos[post.dormId]}
               alt={post.dormName}
             />
             <CardContent>

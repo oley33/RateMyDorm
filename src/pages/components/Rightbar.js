@@ -33,7 +33,7 @@ const Rightbar = ({ onStyleFilterChange }) => {
 
   // Sample comments data
   const comments = [
-    { id: 1, user: 'Prof Kirlin', avatarSrc: 'https://i.pravatar.cc/40', content: 'LoSeRs.' },
+    { id: 1, user: 'Prof Kirlin', avatarSrc: 'https://i.pravatar.cc/40', content: 'Brynn is a LoSeR.' },
     { id: 2, user: 'Prof Kugele', avatarSrc: 'https://i.pravatar.cc/41', content: 'I love Williford.' },
     { id: 3, user: 'Prof Sanders', avatarSrc: 'https://i.pravatar.cc/42', content: 'I will make a dorm in VR.' },
   ];

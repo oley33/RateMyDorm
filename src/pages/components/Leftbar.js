@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, List, ListItem, ListItemText, Button } from '@mui/material';
+import { Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@mui/material';
+import HouseIcon from '@mui/icons-material/House';
 
 const Leftbar = ({ onDormFilterChange, dorms }) => {
   const handleDormClick = (dormName) => {
@@ -11,9 +12,6 @@ const Leftbar = ({ onDormFilterChange, dorms }) => {
 
   return (
     <div>
-      <Typography variant="h6" fontWeight={100}>
-        Dorms
-      </Typography>
       <List>
         {dorms.map((dorm) => (
           <ListItem
@@ -21,14 +19,19 @@ const Leftbar = ({ onDormFilterChange, dorms }) => {
             key={dorm.id}
             onClick={() => handleDormClick(dorm.bldgName)}
           >
-            <ListItemText primary={dorm.bldgName} />
+            <ListItemAvatar>
+              <Avatar>
+                <HouseIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={
+              <Typography variant="h6" fontWeight={400} style={{ flexGrow: 1 }}>
+                {dorm.bldgName}
+              </Typography>
+            } />
           </ListItem>
         ))}
       </List>
-      {/* Add a button line for other functionalities */}
-      <Button variant="contained" color="primary" onClick={() => {/* Handle button click */}}>
-        Other Functionality
-      </Button>
     </div>
   );
 };
