@@ -15,6 +15,7 @@ import { FaStar } from "react-icons/fa";
 // import DormSearch from "./DormSearch";
 import axios from "axios";
 import { useQuery, useMutation } from "react-query";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 const Form = () => {
   const { mutate } = useMutation(() => {
@@ -28,22 +29,53 @@ const Form = () => {
   const imageHandler = (event) => {
 
     const file = event.target.files[0];
-    const formdata = new FormData();
-    formdata.append('image', file);
+    
+    const reader = new FileReader();
 
-    const imageObject = {photo: formdata};
+    reader.onload = function(event) {
+      const fileContent = event.target.result;
+      // console.log(fileContent);
 
-    fetch("https://localhost:8080/photo/add-photo", {
-      method: 'POST',
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(imageObject),
-    })
-    // .then(res => res.json())
+      const byteCharacters = fileContent.split(',')[1];
+      console.log(byteCharacters);
 
-    .catch(error => {
-      console.error(error)
-    })
-  }
+      const byteNumbers = new Array(byteCharacters.length);
+
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt[i];
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      console.log(byteArray);
+      
+      let binaryString = '';
+      for (let i = 0; i < byteArray.length; i++) {
+        binaryString += String.fromCharCode(byteArray[i]);
+      }
+
+      binaryString = btoa(binaryString);
+    
+      // console.log(binaryString);
+      postFunction(byteCharacters);
+    }
+
+    reader.readAsDataURL(file);
+    
+    const  postFunction = (byteArray) => {
+      const imageObject = {dormId: ReviewObject.dormId, photo: byteArray};
+      console.log(imageObject)
+      fetch("http://localhost:8080/photo/add-photo", {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(imageObject),
+      })
+      // .then(res => res.json())
+
+      .catch(error => {
+        console.error(error)
+      })
+  };
+}
 
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
