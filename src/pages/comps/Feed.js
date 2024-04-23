@@ -33,10 +33,24 @@ const Feed = ({ selectedStyle, selectedDorm }) => {
     setSelectedStars(updatedStars);
   };
 
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:src/pages/components/Feed.js
+>>>>>>> d6727d03992594daae1f2419360510277a3a986c
   const handleReset = () => {
     // Clear selectedStyle and selectedDorm
     setFilteredData(data);
   };
+<<<<<<< HEAD
+=======
+========
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["reviewList"],
+    queryFn: () =>
+      axios.get("https://desolate-spire-74197-365605b6831f.herokuapp.com/review/all-reviews").then((res) => res.data),
+  });
+>>>>>>>> d6727d03992594daae1f2419360510277a3a986c:src/pages/comps/Feed.js
+>>>>>>> d6727d03992594daae1f2419360510277a3a986c
 
   if (isLoading) return 'Loading...';
   if (isError) return 'Error fetching data';
