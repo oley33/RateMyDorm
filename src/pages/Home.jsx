@@ -9,7 +9,8 @@ import { useQuery } from "react-query";
 import axios from "axios";
 
 function Home() {
-  const [mode, setMode] = useState("light");
+  const [selectedStyle, setSelectedStyle] = useState(null);
+  const [selectedDorm, setSelectedDorm] = useState(null); // State to store selected dorm
 
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["dormList"],
@@ -21,7 +22,6 @@ function Home() {
 
   if (error) return "An error has occurred: " + error.message;
 
-  console.log(data);
 
   // Define custom themes for light and dark modes
   const lightTheme = createTheme({
@@ -36,6 +36,17 @@ function Home() {
     },
   });
 
+    // Function to handle style filter change
+    const handleStyleFilterChange = (style) => {
+      setSelectedStyle(style);
+    };
+  
+    // Function to handle dorm filter change
+    const handleDormFilterChange = (dormName) => {
+      console.log('Selected dorm:', dormName); // Log selected dorm
+      setSelectedDorm(dormName); // Update selected dorm state
+    };
+
   return (
     <ThemeProvider theme={lightTheme}>
       <Grid container>
@@ -46,12 +57,12 @@ function Home() {
 
         {/* Leftbar */}
         <Grid item xs={12} sm={3} md={2}>
-          <Leftbar />
+          <Leftbar onDormFilterChange={handleDormFilterChange} dorms={data} />
         </Grid>
 
         {/* Feed */}
         <Grid item xs={12} sm={6} md={8} sx={{ overflowY: "auto" }}>
-          <Feed />
+          <Feed selectedDorm={selectedDorm} selectedStyle={selectedStyle} />
         </Grid>
 
         {/* Rightbar */}
@@ -62,7 +73,7 @@ function Home() {
           md={2}
           sx={{ display: { xs: "none", sm: "block" } }}
         >
-          <Rightbar />
+          <Rightbar onStyleFilterChange={handleStyleFilterChange} />
         </Grid>
 
         {/* Add */}

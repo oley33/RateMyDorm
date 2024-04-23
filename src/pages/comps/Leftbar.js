@@ -1,35 +1,48 @@
 import React from 'react';
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper } from '@mui/material';
-import { HolidayVillage } from '@mui/icons-material';
+import { Typography, List, ListItem, ListItemText, Button } from '@mui/material'
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
-const Leftbar = () => {
+
+
+const Leftbar = ({ onDormFilterChange, dorms }) => {
   const { isLoading, isError, data } = useQuery({
     queryKey: ["dormList"],
     queryFn: () =>
       axios.get("https://desolate-spire-74197-365605b6831f.herokuapp.com/dorm/all-dorms").then((res) => res.data),
   });
 
+  const handleDormClick = (dormName) => {
+    console.log('Clicked dorm:', dormName);
+    onDormFilterChange(dormName);
+  };
+
   if (isLoading) return 'Loading...';
   if (isError) return 'Error fetching data';
   console.log(data)
-  
+
   return (
-    <Paper sx={{ position: 'sticky', top: 0, maxHeight: '100vh', overflowY: 'auto' }}>
+    <div>
+      <Typography variant="h6" fontWeight={100}>
+        Dorms
+      </Typography>
       <List>
-        {data.map((dorm, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton component="a" href={`#${dorm.bldgName}`}>
-              <ListItemIcon>
-                <HolidayVillage />
-              </ListItemIcon>
-              <ListItemText primary={dorm.bldgName} />
-            </ListItemButton>
+        {dorms.map((dorm) => (
+          <ListItem
+            button
+            key={dorm.id}
+            onClick={() => handleDormClick(dorm.bldgName)}
+          >
+            <ListItemText primary={dorm.bldgName} />
+
           </ListItem>
         ))}
       </List>
-    </Paper>
+      {/* Add a button line for other functionalities */}
+      <Button variant="contained" color="primary" onClick={() => {/* Handle button click */ }}>
+        Other Functionality
+      </Button>
+    </div>
   );
 }
 
