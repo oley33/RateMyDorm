@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "./Components/Navbar";
+import Navbar from "./comps/Navbar";
 import { Grid } from "@mui/material";
-import Sidebar from "./Components/Sidebar_TUT";
-import Form from "./Components/Form";
-import Rightbar from "./Components/Rightbar_TUT";
+import Sidebar from "./comps/Sidebar_TUT";
+import Form from "./comps/Form";
+import Rightbar from "./comps/Rightbar_TUT";
 
 const PostPage = () => {
   return (
