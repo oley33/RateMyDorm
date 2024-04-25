@@ -46,20 +46,7 @@ const Navbar = () => {
                 <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
                     RateMyDorm
                 </Typography>
-                <PetsIcon sx={{ display: { xs: "block", sm: "none" } }} />
-                <Search><InputBase placeholder="search..."></InputBase></Search>
-                <Icons>
-                    <Badge badgeContent={4} color="error">
-                        <Mail />
-                    </Badge>
-                    <Badge badgeContent={2} color="error">
-                        <Notifications />
-                    </Badge>
-                    <Avatar sx={{ width: 30, height: 30 }}
-                        src="/static/images/avatar/1.jpg"
-                        onClick={e=>setOpen(true)}
-                    />
-                </Icons>
+                
                 <UserBox onClick={e=>setOpen(true)}
 >
                     <Avatar sx={{ width: 30, height: 30 }}
