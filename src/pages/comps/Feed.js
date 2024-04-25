@@ -12,7 +12,7 @@ const Feed = ({ selectedStyle, selectedDorm }) => {
   const { isLoading, isError, data } = useQuery({
     queryKey: ["reviewList"],
     queryFn: () =>
-      axios.get("https://desolate-spire-74197-365605b6831f.herokuapp.com/dorm/all-dorms/review/all-reviews").then((res) => res.data),
+      axios.get("https://desolate-spire-74197-365605b6831f.herokuapp.com/review/all-reviews").then((res) => res.data),
   });
 
   useEffect(() => {

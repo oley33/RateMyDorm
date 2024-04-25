@@ -15,7 +15,7 @@ function Home() {
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["dormList"],
     queryFn: () =>
-      axios.get("https://desolate-spire-74197-365605b6831f.herokuapp.com/dorm/all-dorms/dorm/all-dorms").then((res) => res.data),
+      axios.get("https://desolate-spire-74197-365605b6831f.herokuapp.com/dorm/all-dorms").then((res) => res.data),
   });
 
 

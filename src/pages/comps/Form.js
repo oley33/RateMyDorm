@@ -19,7 +19,7 @@ import { ConstructionOutlined } from "@mui/icons-material";
 
 const Form = () => {
   const { mutate } = useMutation(() => {
-    return fetch("https://desolate-spire-74197-365605b6831f.herokuapp.com/dorm/all-dorms/review/add-review", {
+    return fetch("https://desolate-spire-74197-365605b6831f.herokuapp.com/review/add-review", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(ReviewObject),
@@ -64,7 +64,7 @@ const Form = () => {
     const  postFunction = (byteArray) => {
       const imageObject = {dormId: ReviewObject.dormId, photo: byteArray};
       console.log(imageObject)
-      fetch("https://desolate-spire-74197-365605b6831f.herokuapp.com/dorm/all-dorms/photo/add-photo", {
+      fetch("https://desolate-spire-74197-365605b6831f.herokuapp.com/photo/add-photo", {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(imageObject),
