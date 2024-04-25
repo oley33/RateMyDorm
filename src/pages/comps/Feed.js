@@ -12,7 +12,7 @@ const Feed = ({ selectedStyle, selectedDorm }) => {
   const { isLoading, isError, data } = useQuery({
     queryKey: ["reviewList"],
     queryFn: () =>
-      axios.get("http://localhost:8080/review/all-reviews").then((res) => res.data),
+      axios.get("https://desolate-spire-74197-365605b6831f.herokuapp.com/dorm/all-dorms/review/all-reviews").then((res) => res.data),
   });
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const Feed = ({ selectedStyle, selectedDorm }) => {
   const fetchPhotosForDorm = async (dormId) => {
     try {
       console.log(`Fetching photos for dormId: ${dormId}`);
-      const response = await axios.get(`http://localhost:8080/photo/get-photos/${dormId}`);
+      const response = await axios.get(`https://desolate-spire-74197-365605b6831f.herokuapp.com/dorm/all-dorms/photo/get-photos/${dormId}`);
       console.log('Response from photo endpoint:', response.data);
       return response.data; // Return the entire response
     } catch (error) {

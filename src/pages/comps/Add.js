@@ -2,6 +2,7 @@ import { Fab, Grid, Modal, Tooltip } from '@mui/material';
 import React, { useReducer, useState } from 'react';
 import { Add as AddIcon } from "@mui/icons-material";
 import { reducerExample, initialState } from "./reducerExample";
+import Form from "./comps/Form.js"
 
 const Add = () => {
     const [open, setOpen] = useState(false);
@@ -47,7 +48,7 @@ const Add = () => {
                     }}
                 >
                     <Grid item>
-                        Tony's Post Content Goes Here
+                        <Form/>
                     </Grid>
                 </Grid>
             </Modal>
