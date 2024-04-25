@@ -2,7 +2,7 @@ import { Fab, Grid, Modal, Tooltip } from '@mui/material';
 import React, { useReducer, useState } from 'react';
 import { Add as AddIcon } from "@mui/icons-material";
 import { reducerExample, initialState } from "./reducerExample";
-import Form from "./comps/Form.js"
+import Form from "./Form"
 
 const Add = () => {
     const [open, setOpen] = useState(false);
