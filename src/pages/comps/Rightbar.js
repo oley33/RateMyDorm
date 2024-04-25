@@ -28,13 +28,12 @@ const Rightbar = ({ onStyleFilterChange }) => {
       ...prevStates,
       [style]: !prevStates[style],
     }));
-
     onStyleFilterChange(style);
   };
 
   // Sample comments data
   const comments = [
-    { id: 1, user: 'Prof Kirlin', avatarSrc: 'https://i.pravatar.cc/40', content: 'LoSeRs.' },
+    { id: 1, user: 'Prof Kirlin', avatarSrc: 'https://i.pravatar.cc/40', content: 'Brynn is a LoSeR.' },
     { id: 2, user: 'Prof Kugele', avatarSrc: 'https://i.pravatar.cc/41', content: 'I love Williford.' },
     { id: 3, user: 'Prof Sanders', avatarSrc: 'https://i.pravatar.cc/42', content: 'I will make a dorm in VR.' },
   ];
@@ -47,25 +46,25 @@ const Rightbar = ({ onStyleFilterChange }) => {
           Filters
         </Typography>
         <Grid container direction="column" spacing={1}>
-          <Grid item></Grid>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={checkboxStates.SingleBed}
-                onChange={() => {
-                  setCheckboxStates(prevStates => ({
-                    ...prevStates,
-                    SingleBed: !prevStates.SingleBed,
-                  }));
-                  handleStyleFilterChange('single');
-                }}
-                color="primary"
-              />
-            }
-            label="Single Bed"  // Convert camelCase to title case
-          />
-        </Grid>
-        <Grid item>
+          <Grid item>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checkboxStates.SingleBed}
+                  onChange={() => {
+                    setCheckboxStates(prevStates => ({
+                      ...prevStates,
+                      SingleBed: !prevStates.SingleBed,
+                    }));
+                    handleStyleFilterChange('single');
+                  }}
+                  color="primary"
+                />
+              }
+              label="Single Bed"
+            />
+          </Grid>
+          <Grid item>
             <FormControlLabel
               control={
                 <Checkbox
@@ -138,7 +137,9 @@ const Rightbar = ({ onStyleFilterChange }) => {
             />
           </Grid>
         </Grid>
-      
+      </Grid>
+
+      {/* Comments Section */}
       <Grid item xs={12} mt={4}>
         <Divider />
         <Typography variant="h6" fontWeight={100} mt={2}>
