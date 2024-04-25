@@ -56,7 +56,7 @@ const Rightbar = ({ onStyleFilterChange }) => {
                       ...prevStates,
                       SingleBed: !prevStates.SingleBed,
                     }));
-                    handleStyleFilterChange('single');
+                    handleStyleFilterChange('Single Bed');
                   }}
                   color="primary"
                 />
@@ -74,7 +74,7 @@ const Rightbar = ({ onStyleFilterChange }) => {
                       ...prevStates,
                       DoubleBed: !prevStates.DoubleBed,
                     }));
-                    handleStyleFilterChange('double');
+                    handleStyleFilterChange('Double Bed');
                   }}
                   color="primary"
                 />
@@ -92,7 +92,7 @@ const Rightbar = ({ onStyleFilterChange }) => {
                       ...prevStates,
                       TripleBed: !prevStates.TripleBed,
                     }));
-                    handleStyleFilterChange('triple');
+                    handleStyleFilterChange('Triple Bed');
                   }}
                   color="primary"
                 />
@@ -110,7 +110,7 @@ const Rightbar = ({ onStyleFilterChange }) => {
                       ...prevStates,
                       ApartmentStyle: !prevStates.ApartmentStyle,
                     }));
-                    handleStyleFilterChange('apartment');
+                    handleStyleFilterChange('Apartment Style');
                   }}
                   color="primary"
                 />
@@ -128,7 +128,7 @@ const Rightbar = ({ onStyleFilterChange }) => {
                       ...prevStates,
                       SuiteStyle: !prevStates.SuiteStyle,
                     }));
-                    handleStyleFilterChange('suite');
+                    handleStyleFilterChange('Suite Style');
                   }}
                   color="primary"
                 />
