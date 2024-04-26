@@ -104,7 +104,7 @@ const Feed = ({ selectedStyle, selectedDorm }) => {
                   <MoreVert />
                 </IconButton>
               }
-              title={`Dorm: ${post.dormName},  Style: ${post.style}`} /* Displaying title and date */
+              title={`Dorm: ${post.dormName}, Style: ${post.style}, Style: ${post.style}`} /* Displaying title and date */
             />
             <CardMedia
               component="img"
