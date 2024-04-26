@@ -4,12 +4,6 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
-  Divider,
-  Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
 } from '@mui/material';
 
 const Rightbar = ({ onStyleFilterChange }) => {
@@ -31,12 +25,7 @@ const Rightbar = ({ onStyleFilterChange }) => {
     onStyleFilterChange(style);
   };
 
-  // Sample comments data
-  const comments = [
-    { id: 1, user: 'Prof Kirlin', avatarSrc: 'https://i.pravatar.cc/40', content: 'Brynn is a LoSeR.' },
-    { id: 2, user: 'Prof Kugele', avatarSrc: 'https://i.pravatar.cc/41', content: 'I love Williford.' },
-    { id: 3, user: 'Prof Sanders', avatarSrc: 'https://i.pravatar.cc/42', content: 'I will make a dorm in VR.' },
-  ];
+  
 
   return (
     <Grid container spacing={2} alignItems="flex-start" style={{ position: 'fixed' }}>
@@ -140,25 +129,7 @@ const Rightbar = ({ onStyleFilterChange }) => {
       </Grid>
 
       {/* Comments Section */}
-      <Grid item xs={12} mt={4}>
-        <Divider />
-        <Typography variant="h6" fontWeight={100} mt={2}>
-          Comments
-        </Typography>
-        <List>
-          {comments.map((comment) => (
-            <ListItem key={comment.id} alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar alt={comment.user} src={comment.avatarSrc} />
-              </ListItemAvatar>
-              <ListItemText
-                primary={comment.user}
-                secondary={comment.content}
-              />
-            </ListItem>
-          ))}
-        </List>
-      </Grid>
+      
     </Grid>
   );
 };
